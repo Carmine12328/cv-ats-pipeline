@@ -4,7 +4,7 @@
 [![Live Demo](https://img.shields.io/badge/Live_Demo-View_CV-blue?style=flat-square)](https://Carmine12328.github.io/cv-ats-pipeline/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Data-driven curriculum vitae: **YAML → HTML → PDF** (+ plain `.txt` for ATS paste forms). Built for real Full Stack Developer applications — single column, selectable text, standard section titles.
+Data-driven curriculum vitae: **YAML → HTML → PDF** (+ `.docx` for ATS uploads and `.txt` for paste forms). Built for real Full Stack Developer applications — single column, selectable text, standard section titles.
 
 ## Quick start
 
@@ -19,6 +19,7 @@ Outputs in `dist/`:
 | File      | Use                                        |
 | --------- | ------------------------------------------ |
 | `cv.pdf`  | Attach to applications / email             |
+| `cv.docx` | Upload to ATS portals that prefer Word     |
 | `cv.html` | Preview in browser                         |
 | `cv.txt`  | Paste into portals that ask for plain text |
 

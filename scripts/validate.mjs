@@ -13,6 +13,8 @@ const filesToCheck = [
   "cv-en.pdf",
   "cv.txt",
   "cv-en.txt",
+  "cv.docx",
+  "cv-en.docx",
   "cv.css",
   "favicon.svg",
   "robots.txt",

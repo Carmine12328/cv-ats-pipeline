@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Build pipeline: data/cv.yaml + data/cv.en.yaml → dist/ (HTML + PDF + TXT per language)
+ * Build pipeline: data/cv.yaml + data/cv.en.yaml → dist/ (HTML + PDF + TXT + DOCX per language)
  */
 import { readFile, writeFile, mkdir, copyFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
@@ -8,6 +8,17 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import * as yaml from "js-yaml";
 import Mustache from "mustache";
 import { chromium } from "playwright";
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  HeadingLevel,
+  AlignmentType,
+  BorderStyle,
+  TabStopType,
+  TabStopPosition,
+} from "docx";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -204,6 +215,292 @@ function toPlainText(data) {
   return lines.join("\n").trimEnd() + "\n";
 }
 
+// ---------------------------------------------------------------------------
+// DOCX generation — clean, ATS-optimised Word document from YAML data
+// ---------------------------------------------------------------------------
+async function buildDocx(data, docxPath) {
+  const L = { ...DEFAULT_LABELS, ...(data.labels || {}) };
+  const b = data.basics || {};
+  const sections = [];
+
+  // --- Header: Name + Title ---
+  sections.push(
+    new Paragraph({
+      children: [new TextRun({ text: b.name || "", bold: true, size: 32, font: "Calibri" })],
+      alignment: AlignmentType.LEFT,
+      spacing: { after: 40 },
+    }),
+  );
+  sections.push(
+    new Paragraph({
+      children: [new TextRun({ text: b.title || "", size: 24, color: "444444", font: "Calibri" })],
+      spacing: { after: 80 },
+    }),
+  );
+
+  // --- Contact line ---
+  const contactParts = [b.location, b.email, b.phone, b.linkedin, b.github, b.website].filter(
+    Boolean,
+  );
+  if (contactParts.length) {
+    sections.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: contactParts.join("  ·  "),
+            size: 18,
+            color: "666666",
+            font: "Calibri",
+          }),
+        ],
+        spacing: { after: 200 },
+        border: {
+          bottom: { style: BorderStyle.SINGLE, size: 6, color: "1e3a5f" },
+        },
+      }),
+    );
+  }
+
+  // Helper: section heading
+  const addHeading = (title) => {
+    sections.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: title.toUpperCase(),
+            bold: true,
+            size: 22,
+            color: "1e3a5f",
+            font: "Calibri",
+          }),
+        ],
+        heading: HeadingLevel.HEADING_2,
+        spacing: { before: 240, after: 80 },
+        border: {
+          bottom: { style: BorderStyle.SINGLE, size: 4, color: "c8c8c8" },
+        },
+      }),
+    );
+  };
+
+  // Helper: bullet point
+  const addBullet = (text) => {
+    sections.push(
+      new Paragraph({
+        children: [new TextRun({ text, size: 20, font: "Calibri" })],
+        bullet: { level: 0 },
+        spacing: { after: 40 },
+      }),
+    );
+  };
+
+  // --- Summary ---
+  if (data.summary) {
+    addHeading(L.summary);
+    sections.push(
+      new Paragraph({
+        children: [new TextRun({ text: String(data.summary).trim(), size: 20, font: "Calibri" })],
+        spacing: { after: 120 },
+      }),
+    );
+  }
+
+  // --- Skills ---
+  if (data.skills?.length) {
+    addHeading(L.skills);
+    for (const s of data.skills) {
+      const items = Array.isArray(s.items) ? s.items.join(", ") : s.items;
+      sections.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text: `${s.category}: `, bold: true, size: 20, font: "Calibri" }),
+            new TextRun({ text: items, size: 20, color: "444444", font: "Calibri" }),
+          ],
+          spacing: { after: 40 },
+        }),
+      );
+    }
+  }
+
+  // --- Experience ---
+  if (data.experience?.length) {
+    addHeading(L.experience);
+    for (const e of data.experience) {
+      // Role — Company
+      sections.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `${e.role} — ${e.company}`,
+              bold: true,
+              size: 21,
+              font: "Calibri",
+            }),
+          ],
+          spacing: { before: 120, after: 20 },
+        }),
+      );
+      // Dates | Location
+      const meta = [e.start && e.end ? `${e.start} – ${e.end}` : null, e.location]
+        .filter(Boolean)
+        .join("  |  ");
+      if (meta) {
+        sections.push(
+          new Paragraph({
+            children: [new TextRun({ text: meta, size: 18, color: "666666", font: "Calibri" })],
+            spacing: { after: 40 },
+          }),
+        );
+      }
+      for (const h of e.highlights || []) {
+        addBullet(h);
+      }
+    }
+  }
+
+  // --- Projects ---
+  if (data.projects?.length) {
+    addHeading(L.projects);
+    for (const p of data.projects) {
+      sections.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text: p.name, bold: true, size: 21, font: "Calibri" }),
+            ...(p.url
+              ? [new TextRun({ text: `  (${p.url})`, size: 18, color: "666666", font: "Calibri" })]
+              : []),
+          ],
+          spacing: { before: 120, after: 20 },
+        }),
+      );
+      if (p.stack?.length) {
+        sections.push(
+          new Paragraph({
+            children: [
+              new TextRun({ text: p.stack.join(", "), size: 18, color: "666666", font: "Calibri" }),
+            ],
+            spacing: { after: 40 },
+          }),
+        );
+      }
+      if (p.description) {
+        sections.push(
+          new Paragraph({
+            children: [new TextRun({ text: p.description, size: 20, font: "Calibri" })],
+            spacing: { after: 40 },
+          }),
+        );
+      }
+      for (const h of p.highlights || []) {
+        addBullet(h);
+      }
+    }
+  }
+
+  // --- Education ---
+  if (data.education?.length) {
+    addHeading(L.education);
+    for (const ed of data.education) {
+      sections.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `${ed.degree} — ${ed.institution}`,
+              bold: true,
+              size: 21,
+              font: "Calibri",
+            }),
+          ],
+          spacing: { before: 120, after: 20 },
+        }),
+      );
+      const meta = [ed.start && ed.end ? `${ed.start} – ${ed.end}` : null, ed.location]
+        .filter(Boolean)
+        .join("  |  ");
+      if (meta) {
+        sections.push(
+          new Paragraph({
+            children: [new TextRun({ text: meta, size: 18, color: "666666", font: "Calibri" })],
+            spacing: { after: 40 },
+          }),
+        );
+      }
+      if (ed.details) {
+        sections.push(
+          new Paragraph({
+            children: [new TextRun({ text: ed.details, size: 20, font: "Calibri" })],
+            spacing: { after: 40 },
+          }),
+        );
+      }
+    }
+  }
+
+  // --- Languages & Certifications ---
+  const hasLangs = data.languages?.length;
+  const hasCerts = data.certifications?.length;
+  if (hasLangs || hasCerts) {
+    const langLabel = (data.labels || {}).languages || L.languages || "Languages";
+    const certLabel = (data.labels || {}).certifications || L.certifications || "Certifications";
+    const joiner = (data.labels || {}).languages ? "e" : "&";
+    const heading =
+      hasLangs && hasCerts
+        ? `${langLabel} ${joiner} ${certLabel}`
+        : hasLangs
+          ? langLabel
+          : certLabel;
+    addHeading(heading);
+
+    if (hasLangs) {
+      for (const lang of data.languages) {
+        sections.push(
+          new Paragraph({
+            children: [
+              new TextRun({ text: `${lang.name}: `, bold: true, size: 20, font: "Calibri" }),
+              new TextRun({ text: lang.level, size: 20, color: "444444", font: "Calibri" }),
+            ],
+            spacing: { after: 40 },
+          }),
+        );
+      }
+    }
+    if (hasCerts) {
+      for (const c of data.certifications) {
+        const parts = [c.name, c.issuer, c.year ? `(${c.year})` : null].filter(Boolean);
+        sections.push(
+          new Paragraph({
+            bullet: { level: 0 },
+            children: [
+              new TextRun({
+                text: parts.join(" — ").replace(" — (", " ("),
+                size: 20,
+                font: "Calibri",
+              }),
+            ],
+            spacing: { after: 40 },
+          }),
+        );
+      }
+    }
+  }
+
+  const doc = new Document({
+    sections: [
+      {
+        properties: {
+          page: {
+            margin: { top: 720, right: 720, bottom: 720, left: 720 }, // ~0.5 inch
+          },
+        },
+        children: sections,
+      },
+    ],
+  });
+
+  const buffer = await Packer.toBuffer(doc);
+  await writeFile(docxPath, buffer);
+}
+
 async function buildPdf(browser, htmlPath, pdfPath) {
   const page = await browser.newPage();
   try {
@@ -259,11 +556,14 @@ async function main() {
       const outHtml = join(DIST, `cv${langCfg.suffix}.html`);
       const outPdf = join(DIST, `cv${langCfg.suffix}.pdf`);
       const outTxt = join(DIST, `cv${langCfg.suffix}.txt`);
+      const outDocx = join(DIST, `cv${langCfg.suffix}.docx`);
 
       await writeFile(outHtml, html, "utf8");
       await writeFile(outTxt, toPlainText(data), "utf8");
+      await buildDocx(data, outDocx);
       console.log(`Wrote ${outHtml}`);
       console.log(`Wrote ${outTxt}`);
+      console.log(`Wrote ${outDocx}`);
 
       await buildPdf(browser, outHtml, outPdf);
       console.log(`Wrote ${outPdf}`);

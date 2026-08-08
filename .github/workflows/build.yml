@@ -87,4 +87,6 @@ jobs:
             dist/cv.pdf
             dist/cv.html
             dist/cv.txt
+            dist/cv.docx
+            dist/cv-en.docx
           generate_release_notes: true
