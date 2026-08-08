@@ -14,6 +14,11 @@
   <link rel="stylesheet" href="../styles/cv.css" />
 </head>
 <body>
+  <div class="actions-bar no-print">
+    <a href="cv.pdf" class="btn" download title="Download PDF Version">📄 Download PDF</a>
+    <a href="cv.txt" class="btn" download title="Download Plain Text for ATS">📝 Download TXT</a>
+    <button onclick="window.print()" class="btn" title="Print this page">🖨️ Print CV</button>
+  </div>
   <main class="cv">
     <header class="cv-header">
       <h1 class="name">{{basics.name}}</h1>
