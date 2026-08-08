@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://carmine12328.github.io/cv-ats-pipeline/sitemap.xml

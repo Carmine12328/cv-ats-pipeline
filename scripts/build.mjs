@@ -19,6 +19,16 @@ const OUT_HTML = join(DIST, "cv.html");
 const OUT_CSS = join(DIST, "cv.css");
 const OUT_PDF = join(DIST, "cv.pdf");
 const OUT_TXT = join(DIST, "cv.txt");
+const FAVICON_SRC = join(ROOT, "assets", "favicon.svg");
+const FAVICON_DEST = join(DIST, "favicon.svg");
+const ROBOTS_SRC = join(ROOT, "assets", "robots.txt");
+const ROBOTS_DEST = join(DIST, "robots.txt");
+const SITEMAP_DEST = join(DIST, "sitemap.xml");
+const SOCIAL_SRC = join(ROOT, "assets", "social-preview.jpg");
+const SOCIAL_DEST = join(DIST, "social-preview.jpg");
+const NOT_FOUND_SRC = join(ROOT, "assets", "404.html");
+const NOT_FOUND_DEST = join(DIST, "404.html");
+const SITE_URL = "https://carmine12328.github.io/cv-ats-pipeline/";
 
 const DEFAULT_LABELS = {
   summary: "Professional Summary",
@@ -47,8 +57,25 @@ function prepareView(data) {
     stack_joined: Array.isArray(p.stack) ? p.stack.join(", ") : p.stack,
   }));
 
+  const b = data.basics || {};
+  const sameAs = [b.linkedin, b.github, b.website].filter(Boolean);
+  const jsonLdObj = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: b.name,
+    jobTitle: b.title,
+    url: SITE_URL,
+    ...(b.email && { email: `mailto:${b.email}` }),
+    ...(b.phone && { telephone: b.phone }),
+    ...(b.location && { address: { "@type": "PostalAddress", addressLocality: b.location } }),
+    ...(sameAs.length && { sameAs }),
+  };
+  const jsonLd = JSON.stringify(jsonLdObj, null, 2);
+
   return {
     ...data,
+    lang: data.lang || "it",
+    jsonLd,
     labels,
     summary: typeof data.summary === "string" ? data.summary.trim() : data.summary,
     skills,
@@ -186,9 +213,26 @@ async function main() {
 
   // Self-contained HTML in dist: copy CSS next to HTML and point stylesheet there
   let html = Mustache.render(template, view);
-  html = html.replace(/href="\.\.\/styles\/cv\.css"/, 'href="./cv.css"');
+  html = html.replace(/href="\.\.\/styles\/cv\.css"/g, 'href="./cv.css"');
 
   await copyFile(CSS_PATH, OUT_CSS);
+  await copyFile(FAVICON_SRC, FAVICON_DEST);
+  await copyFile(ROBOTS_SRC, ROBOTS_DEST);
+  await copyFile(SOCIAL_SRC, SOCIAL_DEST);
+  await copyFile(NOT_FOUND_SRC, NOT_FOUND_DEST);
+
+  const today = new Date().toISOString().split("T")[0];
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${SITE_URL}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+`;
+  await writeFile(SITEMAP_DEST, sitemap, "utf8");
   await writeFile(OUT_HTML, html, "utf8");
   await writeFile(OUT_TXT, toPlainText(data), "utf8");
 

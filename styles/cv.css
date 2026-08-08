@@ -253,6 +253,57 @@ a:hover {
   }
 }
 
+/* Mobile — keep single-column, just tighten spacing */
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 9.5pt;
+  }
+
+  body {
+    padding: 0 0 5rem;
+  }
+
+  .cv {
+    margin: 0;
+    padding: 10mm 5mm;
+    min-height: auto;
+    box-shadow: none;
+  }
+
+  .name {
+    font-size: 1.5rem;
+  }
+
+  .title {
+    font-size: 0.95rem;
+  }
+
+  .contact {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact span + span::before {
+    content: none;
+    margin-right: 0;
+  }
+
+  .contact a {
+    word-break: break-word;
+  }
+
+  .actions-bar {
+    gap: 0.4rem;
+    padding: 0.5rem;
+    bottom: 0.75rem;
+  }
+
+  .btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+  }
+}
+
 /* Print / PDF (Playwright) */
 @page {
   size: A4;

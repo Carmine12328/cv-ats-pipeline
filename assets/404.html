@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page Not Found — Carmine Annunziata</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    :root { --accent: #1e3a5f; --font: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: #e8e8e8; font-family: var(--font); color: #1a1a1a;
+    }
+    .card {
+      text-align: center; background: #fff; padding: 3rem 2.5rem;
+      border-radius: 8px; box-shadow: 0 1px 8px rgba(0,0,0,.12); max-width: 420px;
+    }
+    .code { font-size: 4rem; font-weight: 700; color: var(--accent); line-height: 1; }
+    .msg { margin: .75rem 0 1.5rem; color: #444; font-size: 1.05rem; }
+    .link {
+      display: inline-block; padding: .6rem 1.5rem; background: var(--accent);
+      color: #fff; text-decoration: none; border-radius: 25px; font-weight: 600;
+      font-size: .9rem; transition: transform .2s, box-shadow .2s;
+    }
+    .link:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(30,58,95,.2); }
+    .note { margin-top: 1.25rem; font-size: .8rem; color: #999; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p class="code">404</p>
+    <p class="msg">This page doesn't exist.<br>Let's get you back to the CV.</p>
+    <a href="./" class="link">View CV</a>
+    <p class="note">Redirecting automatically in <span id="t">5</span>s…</p>
+  </div>
+  <script>
+    let s = 5;
+    const el = document.getElementById("t");
+    const tick = setInterval(() => { s--; el.textContent = s; if (s <= 0) { clearInterval(tick); location.href = "./"; } }, 1000);
+  </script>
+</body>
+</html>
