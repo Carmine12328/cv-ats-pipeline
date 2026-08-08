@@ -6,12 +6,13 @@ description: Essential guidelines and constraints for modifying the CV ATS Pipel
 # CV ATS Pipeline - Agent Rules
 
 ## Project Context
+
 This is a data-driven CV generator optimized for Applicant Tracking Systems (ATS). It transforms a YAML file (`data/cv.yaml`) into HTML, PDF, and plain text formats using `mustache` and `playwright`.
 
 ## Core Guidelines & Constraints
 
 1. **Source of Truth:**
-   - ALL content changes must be made in `data/cv.yaml`. 
+   - ALL content changes must be made in `data/cv.yaml`.
    - DO NOT manually edit any files in the `dist/` directory. They are auto-generated artifacts.
 
 2. **Building:**

@@ -1,11 +1,17 @@
 {
   "name": "cv-ats-pipeline",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "YAML → HTML → PDF CV generator optimized for ATS and Full Stack Developer applications",
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "build:pdf": "node scripts/build.mjs --pdf-only"
+    "build:pdf": "node scripts/build.mjs --pdf-only",
+    "test": "node scripts/validate.mjs",
+    "lint": "eslint scripts/",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate": "npm run build && npm run test",
+    "prepare": "husky"
   },
   "engines": {
     "node": ">=20"
@@ -14,6 +20,22 @@
     "js-yaml": "^5.2.3",
     "mustache": "^4.2.0",
     "playwright": "^1.62.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "prettier": "^3.5.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0"
+  },
+  "lint-staged": {
+    "*.{js,mjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,yml,yaml,md,css,html}": [
+      "prettier --write"
+    ]
   },
   "private": true
 }

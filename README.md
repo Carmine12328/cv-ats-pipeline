@@ -2,6 +2,7 @@
 
 [![Build CV](https://github.com/Carmine12328/cv-ats-pipeline/actions/workflows/build.yml/badge.svg)](https://github.com/Carmine12328/cv-ats-pipeline/actions/workflows/build.yml)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-View_CV-blue?style=flat-square)](https://Carmine12328.github.io/cv-ats-pipeline/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Data-driven curriculum vitae: **YAML → HTML → PDF** (+ plain `.txt` for ATS paste forms). Built for real Full Stack Developer applications — single column, selectable text, standard section titles.
 
@@ -15,11 +16,11 @@ npm run build
 
 Outputs in `dist/`:
 
-| File | Use |
-|------|-----|
-| `cv.pdf` | Attach to applications / email |
-| `cv.html` | Preview in browser |
-| `cv.txt` | Paste into portals that ask for plain text |
+| File      | Use                                        |
+| --------- | ------------------------------------------ |
+| `cv.pdf`  | Attach to applications / email             |
+| `cv.html` | Preview in browser                         |
+| `cv.txt`  | Paste into portals that ask for plain text |
 
 ## Customize content
 
@@ -37,12 +38,17 @@ For a specific job posting, duplicate the YAML (e.g. `data/cv.en.yaml`) and twea
 
 ## Scripts
 
-| Command | What it does |
-|---------|----------------|
-| `npm run build` | Render HTML + TXT + PDF |
-| `npm run build:pdf` | Same pipeline (PDF always generated; useful alias) |
+| Command                | What it does                                       |
+| ---------------------- | -------------------------------------------------- |
+| `npm run build`        | Render HTML + TXT + PDF                            |
+| `npm run build:pdf`    | Same pipeline (PDF always generated; useful alias) |
+| `npm test`             | Validate build output (10 artifact checks)         |
+| `npm run lint`         | Lint scripts with ESLint                           |
+| `npm run format`       | Auto-format all files with Prettier                |
+| `npm run format:check` | Check formatting without writing                   |
+| `npm run validate`     | Full pipeline: build + test                        |
 
-Stack: Node.js ≥ 18, `js-yaml`, `mustache`, `playwright`.
+Stack: Node.js ≥ 20, `js-yaml`, `mustache`, `playwright`.
 
 ## Layout principles (do not break for ATS)
 
@@ -70,9 +76,14 @@ data/cv.yaml          # content source of truth
 templates/cv.html     # Mustache HTML template
 styles/cv.css         # A4 single-column styles
 scripts/build.mjs     # build pipeline
+scripts/validate.mjs  # artifact validation
 dist/                 # generated artifacts
 ```
 
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, ATS constraints, and the commit convention.
+
 ## License
 
-Private / personal use — replace placeholder data with your own before sending.
+[MIT](LICENSE) © Carmine Annunziata

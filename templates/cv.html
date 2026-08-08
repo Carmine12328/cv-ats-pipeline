@@ -1,190 +1,245 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{lang}}">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-  <link rel="canonical" href="https://carmine12328.github.io/cv-ats-pipeline/" />
-  <title>{{basics.name}} — {{basics.title}}</title>
-  <meta name="description" content="{{summary}}" />
-  <meta property="og:title" content="{{basics.name}} — {{basics.title}}" />
-  <meta property="og:description" content="{{summary}}" />
-  <meta property="og:type" content="profile" />
-  <meta property="og:url" content="https://carmine12328.github.io/cv-ats-pipeline/" />
-  <meta property="og:image" content="https://carmine12328.github.io/cv-ats-pipeline/social-preview.jpg" />
-  <meta property="og:image:width" content="1408" />
-  <meta property="og:image:height" content="792" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{basics.name}} — {{basics.title}}" />
-  <meta name="twitter:description" content="{{summary}}" />
-  <script type="application/ld+json">{{{jsonLd}}}</script>
-  <link rel="preload" href="../styles/cv.css" as="style" />
-  <link rel="stylesheet" href="../styles/cv.css" />
-</head>
-<body>
-  <div class="actions-bar no-print">
-    <a href="cv{{langSuffix}}.pdf" class="btn btn-secondary" download title="Download PDF Version">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
-      PDF
-    </a>
-    <a href="cv{{langSuffix}}.txt" class="btn btn-secondary" download title="Download Plain Text for ATS">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-      TXT
-    </a>
-    <button onclick="handlePrint()" class="btn" title="Print this page">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-      Print
-    </button>
-    <span class="actions-divider"></span>
-    <div class="lang-switcher">
-      {{#languages_nav}}
-      <a href="{{href}}" class="lang-btn{{#active}} lang-active{{/active}}" title="{{title}}">{{code}}</a>
-      {{/languages_nav}}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="canonical" href="https://carmine12328.github.io/cv-ats-pipeline/" />
+    <title>{{basics.name}} — {{basics.title}}</title>
+    <meta name="description" content="{{summary}}" />
+    <meta property="og:title" content="{{basics.name}} — {{basics.title}}" />
+    <meta property="og:description" content="{{summary}}" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://carmine12328.github.io/cv-ats-pipeline/" />
+    <meta
+      property="og:image"
+      content="https://carmine12328.github.io/cv-ats-pipeline/social-preview.jpg"
+    />
+    <meta property="og:image:width" content="1408" />
+    <meta property="og:image:height" content="792" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{basics.name}} — {{basics.title}}" />
+    <meta name="twitter:description" content="{{summary}}" />
+    <script type="application/ld+json">
+      {{{jsonLd}}}
+    </script>
+    <link rel="preload" href="../styles/cv.css" as="style" />
+    <link rel="stylesheet" href="../styles/cv.css" />
+  </head>
+  <body>
+    <div class="actions-bar no-print">
+      <a
+        href="cv{{langSuffix}}.pdf"
+        class="btn btn-secondary"
+        download
+        title="Download PDF Version"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="12" y1="18" x2="12" y2="12"></line>
+          <polyline points="9 15 12 18 15 15"></polyline>
+        </svg>
+        PDF
+      </a>
+      <a
+        href="cv{{langSuffix}}.txt"
+        class="btn btn-secondary"
+        download
+        title="Download Plain Text for ATS"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        TXT
+      </a>
+      <button onclick="handlePrint()" class="btn" title="Print this page">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path
+            d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+          ></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Print
+      </button>
+      <span class="actions-divider"></span>
+      <div class="lang-switcher">
+        {{#languages_nav}}
+        <a href="{{href}}" class="lang-btn{{#active}} lang-active{{/active}}" title="{{title}}"
+          >{{code}}</a
+        >
+        {{/languages_nav}}
+      </div>
     </div>
-  </div>
-  <main class="cv">
-    <header class="cv-header">
-      <h1 class="name">{{basics.name}}</h1>
-      <p class="title">{{basics.title}}</p>
-      <p class="contact">
-        {{#basics.location}}<span>{{basics.location}}</span>{{/basics.location}}
-        {{#basics.email}}<span><a href="mailto:{{basics.email}}">{{basics.email}}</a></span>{{/basics.email}}
-        {{#basics.phone}}<span>{{basics.phone}}</span>{{/basics.phone}}
-        {{#basics.linkedin}}<span><a href="{{basics.linkedin}}">{{basics.linkedin}}</a></span>{{/basics.linkedin}}
-        {{#basics.github}}<span><a href="{{basics.github}}">{{basics.github}}</a></span>{{/basics.github}}
-        {{#basics.website}}<span><a href="{{basics.website}}">{{basics.website}}</a></span>{{/basics.website}}
-      </p>
-    </header>
+    <main class="cv">
+      <header class="cv-header">
+        <h1 class="name">{{basics.name}}</h1>
+        <p class="title">{{basics.title}}</p>
+        <p class="contact">
+          {{#basics.location}}<span>{{basics.location}}</span>{{/basics.location}}
+          {{#basics.email}}<span><a href="mailto:{{basics.email}}">{{basics.email}}</a></span
+          >{{/basics.email}} {{#basics.phone}}<span>{{basics.phone}}</span>{{/basics.phone}}
+          {{#basics.linkedin}}<span><a href="{{basics.linkedin}}">{{basics.linkedin}}</a></span
+          >{{/basics.linkedin}} {{#basics.github}}<span
+            ><a href="{{basics.github}}">{{basics.github}}</a></span
+          >{{/basics.github}} {{#basics.website}}<span
+            ><a href="{{basics.website}}">{{basics.website}}</a></span
+          >{{/basics.website}}
+        </p>
+      </header>
 
-    {{#summary}}
-    <section class="section" aria-labelledby="summary-heading">
-      <h2 id="summary-heading">{{labels.summary}}</h2>
-      <p class="summary">{{summary}}</p>
-    </section>
-    {{/summary}}
-
-    {{#skills.length}}
-    <section class="section" aria-labelledby="skills-heading">
-      <h2 id="skills-heading">{{labels.skills}}</h2>
-      <ul class="skills-list">
-        {{#skills}}
-        <li>
-          <span class="skill-category">{{category}}:</span>
-          <span class="skill-items">{{items_joined}}</span>
-        </li>
-        {{/skills}}
-      </ul>
-    </section>
-    {{/skills.length}}
-
-    {{#experience.length}}
-    <section class="section" aria-labelledby="experience-heading">
-      <h2 id="experience-heading">{{labels.experience}}</h2>
-      {{#experience}}
-      <article class="entry">
-        <div class="entry-header">
-          <h3 class="entry-title">{{role}} — {{company}}</h3>
-          <p class="entry-meta">
-            <span class="dates">{{start}} – {{end}}</span>
-            {{#location}}<span class="location">{{location}}</span>{{/location}}
-          </p>
-        </div>
-        {{#highlights.length}}
-        <ul class="bullets">
-          {{#highlights}}
-          <li>{{.}}</li>
-          {{/highlights}}
+      {{#summary}}
+      <section class="section" aria-labelledby="summary-heading">
+        <h2 id="summary-heading">{{labels.summary}}</h2>
+        <p class="summary">{{summary}}</p>
+      </section>
+      {{/summary}} {{#skills.length}}
+      <section class="section" aria-labelledby="skills-heading">
+        <h2 id="skills-heading">{{labels.skills}}</h2>
+        <ul class="skills-list">
+          {{#skills}}
+          <li>
+            <span class="skill-category">{{category}}:</span>
+            <span class="skill-items">{{items_joined}}</span>
+          </li>
+          {{/skills}}
         </ul>
-        {{/highlights.length}}
-      </article>
-      {{/experience}}
-    </section>
-    {{/experience.length}}
-
-    {{#projects.length}}
-    <section class="section" aria-labelledby="projects-heading">
-      <h2 id="projects-heading">{{labels.projects}}</h2>
-      {{#projects}}
-      <article class="entry">
-        <div class="entry-header">
-          <h3 class="entry-title">
-            {{#url}}<a href="{{url}}">{{name}}</a>{{/url}}
-            {{^url}}{{name}}{{/url}}
-          </h3>
-          {{#stack_joined}}
-          <p class="entry-meta"><span class="stack">{{stack_joined}}</span></p>
-          {{/stack_joined}}
-        </div>
-        {{#description}}<p class="entry-desc">{{description}}</p>{{/description}}
-        {{#highlights.length}}
-        <ul class="bullets">
-          {{#highlights}}
-          <li>{{.}}</li>
-          {{/highlights}}
+      </section>
+      {{/skills.length}} {{#experience.length}}
+      <section class="section" aria-labelledby="experience-heading">
+        <h2 id="experience-heading">{{labels.experience}}</h2>
+        {{#experience}}
+        <article class="entry">
+          <div class="entry-header">
+            <h3 class="entry-title">{{role}} — {{company}}</h3>
+            <p class="entry-meta">
+              <span class="dates">{{start}} – {{end}}</span>
+              {{#location}}<span class="location">{{location}}</span>{{/location}}
+            </p>
+          </div>
+          {{#highlights.length}}
+          <ul class="bullets">
+            {{#highlights}}
+            <li>{{.}}</li>
+            {{/highlights}}
+          </ul>
+          {{/highlights.length}}
+        </article>
+        {{/experience}}
+      </section>
+      {{/experience.length}} {{#projects.length}}
+      <section class="section" aria-labelledby="projects-heading">
+        <h2 id="projects-heading">{{labels.projects}}</h2>
+        {{#projects}}
+        <article class="entry">
+          <div class="entry-header">
+            <h3 class="entry-title">
+              {{#url}}<a href="{{url}}">{{name}}</a>{{/url}} {{^url}}{{name}}{{/url}}
+            </h3>
+            {{#stack_joined}}
+            <p class="entry-meta"><span class="stack">{{stack_joined}}</span></p>
+            {{/stack_joined}}
+          </div>
+          {{#description}}
+          <p class="entry-desc">{{description}}</p>
+          {{/description}} {{#highlights.length}}
+          <ul class="bullets">
+            {{#highlights}}
+            <li>{{.}}</li>
+            {{/highlights}}
+          </ul>
+          {{/highlights.length}}
+        </article>
+        {{/projects}}
+      </section>
+      {{/projects.length}} {{#education.length}}
+      <section class="section" aria-labelledby="education-heading">
+        <h2 id="education-heading">{{labels.education}}</h2>
+        {{#education}}
+        <article class="entry">
+          <div class="entry-header">
+            <h3 class="entry-title">{{degree}} — {{institution}}</h3>
+            <p class="entry-meta">
+              <span class="dates">{{start}} – {{end}}</span>
+              {{#location}}<span class="location">{{location}}</span>{{/location}}
+            </p>
+          </div>
+          {{#details}}
+          <p class="entry-desc">{{details}}</p>
+          {{/details}}
+        </article>
+        {{/education}}
+      </section>
+      {{/education.length}} {{#languages.length}}
+      <section class="section" aria-labelledby="languages-heading">
+        <h2 id="languages-heading">{{labels.languagesCertifications}}</h2>
+        <ul class="skills-list">
+          {{#languages}}
+          <li>
+            <span class="skill-category">{{name}}:</span>
+            <span class="skill-items">{{level}}</span>
+          </li>
+          {{/languages}}
         </ul>
-        {{/highlights.length}}
-      </article>
-      {{/projects}}
-    </section>
-    {{/projects.length}}
+        {{#certifications.length}}
+        <ul class="certs-list compact-certs">
+          {{#certifications}}
+          <li>
+            <span class="cert-name">{{name}}</span>
+            {{#issuer}} — {{issuer}}{{/issuer}} {{#year}} ({{year}}){{/year}}
+          </li>
+          {{/certifications}}
+        </ul>
+        {{/certifications.length}}
+      </section>
+      {{/languages.length}}
+    </main>
 
-    {{#education.length}}
-    <section class="section" aria-labelledby="education-heading">
-      <h2 id="education-heading">{{labels.education}}</h2>
-      {{#education}}
-      <article class="entry">
-        <div class="entry-header">
-          <h3 class="entry-title">{{degree}} — {{institution}}</h3>
-          <p class="entry-meta">
-            <span class="dates">{{start}} – {{end}}</span>
-            {{#location}}<span class="location">{{location}}</span>{{/location}}
-          </p>
-        </div>
-        {{#details}}<p class="entry-desc">{{details}}</p>{{/details}}
-      </article>
-      {{/education}}
-    </section>
-    {{/education.length}}
+    <script>
+      function handlePrint() {
+        window.print();
+      }
 
-    {{#languages.length}}
-    <section class="section" aria-labelledby="languages-heading">
-      <h2 id="languages-heading">{{labels.languagesCertifications}}</h2>
-      <ul class="skills-list">
-        {{#languages}}
-        <li>
-          <span class="skill-category">{{name}}:</span>
-          <span class="skill-items">{{level}}</span>
-        </li>
-        {{/languages}}
-      </ul>
-      {{#certifications.length}}
-      <ul class="certs-list compact-certs">
-        {{#certifications}}
-        <li>
-          <span class="cert-name">{{name}}</span>
-          {{#issuer}} — {{issuer}}{{/issuer}}
-          {{#year}} ({{year}}){{/year}}
-        </li>
-        {{/certifications}}
-      </ul>
-      {{/certifications.length}}
-    </section>
-    {{/languages.length}}
-  </main>
-  
-  <script>
-    function handlePrint() {
-      window.print();
-    }
-    
-    // Assicura che i pulsanti spariscano prima della stampa e riappaiano dopo
-    window.addEventListener('beforeprint', () => {
-      document.querySelector('.actions-bar').style.display = 'none';
-    });
-    
-    window.addEventListener('afterprint', () => {
-      document.querySelector('.actions-bar').style.display = 'flex';
-    });
-  </script>
-</body>
+      // Assicura che i pulsanti spariscano prima della stampa e riappaiano dopo
+      window.addEventListener("beforeprint", () => {
+        document.querySelector(".actions-bar").style.display = "none";
+      });
+
+      window.addEventListener("afterprint", () => {
+        document.querySelector(".actions-bar").style.display = "flex";
+      });
+    </script>
+  </body>
 </html>

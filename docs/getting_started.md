@@ -30,7 +30,7 @@ To generate your CV from the `data/cv.yaml` file, simply run:
 npm run build
 ```
 
-*(You can also use `npm run build:pdf` which does the exact same thing)*
+_(You can also use `npm run build:pdf` which does the exact same thing)_
 
 ## Outputs
 

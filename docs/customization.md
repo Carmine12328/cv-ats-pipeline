@@ -16,7 +16,7 @@ Open `data/cv.yaml` in your favorite text editor. The file is structured into lo
 
 ### Changing Section Titles (i18n)
 
-By default, the templates might use certain titles for sections. You can override them using the `labels` section at the bottom of the YAML file. 
+By default, the templates might use certain titles for sections. You can override them using the `labels` section at the bottom of the YAML file.
 
 ```yaml
 labels:
@@ -34,6 +34,6 @@ To ensure maximum compatibility with Applicant Tracking Systems, please keep the
 
 ## Editing Styles
 
-If you absolutely must change the visual appearance, you can edit `styles/cv.css`. 
+If you absolutely must change the visual appearance, you can edit `styles/cv.css`.
 
 The stylesheet is built to look good on screen and perfectly formatted for A4 paper via the `@media print` query. When adjusting styles, always run a build and check `dist/cv.pdf` to ensure you haven't broken the print layout!

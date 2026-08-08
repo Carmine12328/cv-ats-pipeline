@@ -1,0 +1,30 @@
+name: CV Content Update
+description: Request a change to CV content in data/cv.yaml
+labels: [content]
+body:
+  - type: dropdown
+    id: section
+    attributes:
+      label: Section to update
+      options:
+        - basics
+        - summary
+        - skills
+        - experience
+        - projects
+        - education
+        - certifications
+        - languages
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the change
+    validations:
+      required: true
+  - type: checkboxes
+    id: language
+    attributes:
+      label: Language
+      options:
+        - label: Italian
+        - label: English
