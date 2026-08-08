@@ -107,12 +107,16 @@ function prepareView(data, currentSuffix) {
     href: `${SITE_URL}cv${l.suffix}.html`,
   }));
 
+  // Build a dynamic download filename from the person's name: "Carmine Annunziata" → "Carmine_Annunziata_CV"
+  const fileBaseName = ((data.basics || {}).name || "CV").trim().replace(/\s+/g, "_") + "_CV";
+
   return {
     ...data,
     lang: data.lang || "it",
     jsonLd,
     canonicalUrl,
     labels,
+    fileBaseName,
     summary: typeof data.summary === "string" ? data.summary.trim() : data.summary,
     skills,
     projects,
