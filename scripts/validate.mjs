@@ -17,6 +17,7 @@ const filesToCheck = [
   "favicon.svg",
   "robots.txt",
   "sitemap.xml",
+  "index.html",
 ];
 
 let hasErrors = false;

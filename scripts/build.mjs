@@ -64,12 +64,17 @@ function prepareView(data, currentSuffix) {
 
   const b = data.basics || {};
   const sameAs = [b.linkedin, b.github, b.website].filter(Boolean);
+
+  // Language-specific canonical URL
+  const pageFile = currentSuffix === "" ? "" : `cv${currentSuffix}.html`;
+  const canonicalUrl = `${SITE_URL}${pageFile}`;
+
   const jsonLdObj = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: b.name,
     jobTitle: b.title,
-    url: SITE_URL,
+    url: canonicalUrl,
     ...(b.email && { email: `mailto:${b.email}` }),
     ...(b.phone && { telephone: b.phone }),
     ...(b.location && { address: { "@type": "PostalAddress", addressLocality: b.location } }),
@@ -85,10 +90,17 @@ function prepareView(data, currentSuffix) {
     active: l.suffix === currentSuffix,
   }));
 
+  // Build hreflang alternate links for SEO
+  const hreflang_links = LANGUAGES.map((l) => ({
+    lang: l.code.toLowerCase(),
+    href: `${SITE_URL}cv${l.suffix}.html`,
+  }));
+
   return {
     ...data,
     lang: data.lang || "it",
     jsonLd,
+    canonicalUrl,
     labels,
     summary: typeof data.summary === "string" ? data.summary.trim() : data.summary,
     skills,
@@ -98,6 +110,7 @@ function prepareView(data, currentSuffix) {
     certifications: data.certifications || [],
     languages: data.languages || [],
     languages_nav,
+    hreflang_links,
     langSuffix: currentSuffix,
   };
 }
@@ -191,10 +204,9 @@ function toPlainText(data) {
   return lines.join("\n").trimEnd() + "\n";
 }
 
-async function buildPdf(htmlPath, pdfPath) {
-  const browser = await chromium.launch();
+async function buildPdf(browser, htmlPath, pdfPath) {
+  const page = await browser.newPage();
   try {
-    const page = await browser.newPage();
     await page.goto(pathToFileURL(htmlPath).href, {
       waitUntil: "networkidle",
     });
@@ -210,7 +222,7 @@ async function buildPdf(htmlPath, pdfPath) {
       },
     });
   } finally {
-    await browser.close();
+    await page.close();
   }
 }
 
@@ -226,33 +238,45 @@ async function main() {
   await copyFile(SOCIAL_SRC, SOCIAL_DEST);
   await copyFile(NOT_FOUND_SRC, NOT_FOUND_DEST);
 
-  // Build each language
-  for (const langCfg of LANGUAGES) {
-    const dataPath = join(ROOT, "data", langCfg.yamlFile);
-    const raw = await readFile(dataPath, "utf8");
-    const data = yaml.load(raw);
-    if (!data?.basics?.name) {
-      throw new Error(`${langCfg.yamlFile} must define basics.name`);
+  // Launch browser once and reuse across all PDF builds
+  const browser = await chromium.launch();
+  try {
+    // Build each language
+    for (const langCfg of LANGUAGES) {
+      const dataPath = join(ROOT, "data", langCfg.yamlFile);
+      const raw = await readFile(dataPath, "utf8");
+      const data = yaml.load(raw);
+      if (!data?.basics?.name) {
+        throw new Error(`${langCfg.yamlFile} must define basics.name`);
+      }
+
+      const view = prepareView(data, langCfg.suffix);
+
+      // Render HTML — rewrite CSS path for dist
+      let html = Mustache.render(template, view);
+      html = html.replace(/href="\.\.\/styles\/cv\.css"/g, 'href="./cv.css"');
+
+      const outHtml = join(DIST, `cv${langCfg.suffix}.html`);
+      const outPdf = join(DIST, `cv${langCfg.suffix}.pdf`);
+      const outTxt = join(DIST, `cv${langCfg.suffix}.txt`);
+
+      await writeFile(outHtml, html, "utf8");
+      await writeFile(outTxt, toPlainText(data), "utf8");
+      console.log(`Wrote ${outHtml}`);
+      console.log(`Wrote ${outTxt}`);
+
+      await buildPdf(browser, outHtml, outPdf);
+      console.log(`Wrote ${outPdf}`);
     }
-
-    const view = prepareView(data, langCfg.suffix);
-
-    // Render HTML — rewrite CSS path for dist
-    let html = Mustache.render(template, view);
-    html = html.replace(/href="\.\.\/styles\/cv\.css"/g, 'href="./cv.css"');
-
-    const outHtml = join(DIST, `cv${langCfg.suffix}.html`);
-    const outPdf = join(DIST, `cv${langCfg.suffix}.pdf`);
-    const outTxt = join(DIST, `cv${langCfg.suffix}.txt`);
-
-    await writeFile(outHtml, html, "utf8");
-    await writeFile(outTxt, toPlainText(data), "utf8");
-    console.log(`Wrote ${outHtml}`);
-    console.log(`Wrote ${outTxt}`);
-
-    await buildPdf(outHtml, outPdf);
-    console.log(`Wrote ${outPdf}`);
+  } finally {
+    await browser.close();
   }
+
+  // Generate index.html for local dev (CI also does this, but local builds need it too)
+  const indexSrc = join(DIST, "cv.html");
+  const indexDest = join(DIST, "index.html");
+  await copyFile(indexSrc, indexDest);
+  console.log(`Wrote ${indexDest}`);
 
   // Sitemap — include all language variants
   const today = new Date().toISOString().split("T")[0];

@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <link rel="canonical" href="https://carmine12328.github.io/cv-ats-pipeline/" />
+    <link rel="canonical" href="{{canonicalUrl}}" />
+    {{#hreflang_links}}
+    <link rel="alternate" hreflang="{{lang}}" href="{{href}}" />
+    {{/hreflang_links}}
     <title>{{basics.name}} — {{basics.title}}</title>
     <meta name="description" content="{{summary}}" />
     <meta property="og:title" content="{{basics.name}} — {{basics.title}}" />
     <meta property="og:description" content="{{summary}}" />
     <meta property="og:type" content="profile" />
-    <meta property="og:url" content="https://carmine12328.github.io/cv-ats-pipeline/" />
+    <meta property="og:url" content="{{canonicalUrl}}" />
     <meta
       property="og:image"
       content="https://carmine12328.github.io/cv-ats-pipeline/social-preview.jpg"

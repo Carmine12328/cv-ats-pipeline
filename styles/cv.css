@@ -391,7 +391,9 @@ a:hover {
   }
 
   .section {
-    break-inside: avoid;
+    /* break-inside: avoid removed — large sections (e.g. Experience)
+       can exceed one page and would leave blank space on page 1.
+       Individual .entry elements below still avoid breaking. */
   }
 
   .entry {
