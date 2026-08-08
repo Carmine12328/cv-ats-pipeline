@@ -248,6 +248,55 @@ a:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   }
 
+  /* Language switcher */
+  .actions-divider {
+    width: 1px;
+    align-self: stretch;
+    margin: 0.25rem 0;
+    background: var(--rule);
+    opacity: 0.6;
+  }
+
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.7rem;
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--muted);
+    background: transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .lang-btn:hover {
+    background-color: #f1f3f5;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .lang-active {
+    background-color: var(--accent);
+    color: #fff;
+  }
+
+  .lang-active:hover {
+    background-color: var(--accent);
+    color: #fff;
+    opacity: 0.9;
+  }
+
   body {
     padding: 0 0.5rem 6rem; /* extra padding to scroll past the floating bar */
   }
@@ -301,6 +350,11 @@ a:hover {
   .btn {
     padding: 0.5rem 0.9rem;
     font-size: 0.8rem;
+  }
+
+  .lang-btn {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.7rem;
   }
 }
 

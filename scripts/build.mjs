@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Build pipeline: data/cv.yaml → dist/cv.html + dist/cv.pdf + dist/cv.txt
+ * Build pipeline: data/cv.yaml + data/cv.en.yaml → dist/ (HTML + PDF + TXT per language)
  */
 import { readFile, writeFile, mkdir, copyFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
@@ -11,14 +11,9 @@ import { chromium } from "playwright";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
-const DATA_PATH = join(ROOT, "data", "cv.yaml");
 const TEMPLATE_PATH = join(ROOT, "templates", "cv.html");
 const CSS_PATH = join(ROOT, "styles", "cv.css");
 const DIST = join(ROOT, "dist");
-const OUT_HTML = join(DIST, "cv.html");
-const OUT_CSS = join(DIST, "cv.css");
-const OUT_PDF = join(DIST, "cv.pdf");
-const OUT_TXT = join(DIST, "cv.txt");
 const FAVICON_SRC = join(ROOT, "assets", "favicon.svg");
 const FAVICON_DEST = join(DIST, "favicon.svg");
 const ROBOTS_SRC = join(ROOT, "assets", "robots.txt");
@@ -29,6 +24,16 @@ const SOCIAL_DEST = join(DIST, "social-preview.jpg");
 const NOT_FOUND_SRC = join(ROOT, "assets", "404.html");
 const NOT_FOUND_DEST = join(DIST, "404.html");
 const SITE_URL = "https://carmine12328.github.io/cv-ats-pipeline/";
+
+// ---------------------------------------------------------------------------
+// Language configuration
+// Each entry: { code, label, title, yamlFile, suffix }
+// suffix is appended to output filenames: "" → cv.html, "-en" → cv-en.html
+// ---------------------------------------------------------------------------
+const LANGUAGES = [
+  { code: "IT", label: "IT", title: "Italiano", yamlFile: "cv.yaml", suffix: "" },
+  { code: "EN", label: "EN", title: "English", yamlFile: "cv.en.yaml", suffix: "-en" },
+];
 
 const DEFAULT_LABELS = {
   summary: "Professional Summary",
@@ -41,7 +46,7 @@ const DEFAULT_LABELS = {
   languagesCertifications: "Languages & Certifications",
 };
 
-function prepareView(data) {
+function prepareView(data, currentSuffix) {
   const labels = { ...DEFAULT_LABELS, ...(data.labels || {}) };
   if (!(data.labels || {}).languagesCertifications) {
     const isItalianOverride = Boolean((data.labels || {}).languages);
@@ -72,6 +77,14 @@ function prepareView(data) {
   };
   const jsonLd = JSON.stringify(jsonLdObj, null, 2);
 
+  // Build language navigation for the template
+  const languages_nav = LANGUAGES.map((l) => ({
+    code: l.label,
+    href: `cv${l.suffix}.html`,
+    title: l.title,
+    active: l.suffix === currentSuffix,
+  }));
+
   return {
     ...data,
     lang: data.lang || "it",
@@ -84,6 +97,8 @@ function prepareView(data) {
     education: data.education || [],
     certifications: data.certifications || [],
     languages: data.languages || [],
+    languages_nav,
+    langSuffix: currentSuffix,
   };
 }
 
@@ -202,45 +217,60 @@ async function buildPdf(htmlPath, pdfPath) {
 async function main() {
   await mkdir(DIST, { recursive: true });
 
-  const raw = await readFile(DATA_PATH, "utf8");
-  const data = yaml.load(raw);
-  if (!data?.basics?.name) {
-    throw new Error("data/cv.yaml must define basics.name");
-  }
-
-  const view = prepareView(data);
   const template = await readFile(TEMPLATE_PATH, "utf8");
 
-  // Self-contained HTML in dist: copy CSS next to HTML and point stylesheet there
-  let html = Mustache.render(template, view);
-  html = html.replace(/href="\.\.\/styles\/cv\.css"/g, 'href="./cv.css"');
-
-  await copyFile(CSS_PATH, OUT_CSS);
+  // Copy shared assets (once)
+  await copyFile(CSS_PATH, join(DIST, "cv.css"));
   await copyFile(FAVICON_SRC, FAVICON_DEST);
   await copyFile(ROBOTS_SRC, ROBOTS_DEST);
   await copyFile(SOCIAL_SRC, SOCIAL_DEST);
   await copyFile(NOT_FOUND_SRC, NOT_FOUND_DEST);
 
+  // Build each language
+  for (const langCfg of LANGUAGES) {
+    const dataPath = join(ROOT, "data", langCfg.yamlFile);
+    const raw = await readFile(dataPath, "utf8");
+    const data = yaml.load(raw);
+    if (!data?.basics?.name) {
+      throw new Error(`${langCfg.yamlFile} must define basics.name`);
+    }
+
+    const view = prepareView(data, langCfg.suffix);
+
+    // Render HTML — rewrite CSS path for dist
+    let html = Mustache.render(template, view);
+    html = html.replace(/href="\.\.\/styles\/cv\.css"/g, 'href="./cv.css"');
+
+    const outHtml = join(DIST, `cv${langCfg.suffix}.html`);
+    const outPdf = join(DIST, `cv${langCfg.suffix}.pdf`);
+    const outTxt = join(DIST, `cv${langCfg.suffix}.txt`);
+
+    await writeFile(outHtml, html, "utf8");
+    await writeFile(outTxt, toPlainText(data), "utf8");
+    console.log(`Wrote ${outHtml}`);
+    console.log(`Wrote ${outTxt}`);
+
+    await buildPdf(outHtml, outPdf);
+    console.log(`Wrote ${outPdf}`);
+  }
+
+  // Sitemap — include all language variants
   const today = new Date().toISOString().split("T")[0];
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${SITE_URL}</loc>
+  const urlEntries = LANGUAGES.map(
+    (l) => `  <url>
+    <loc>${SITE_URL}cv${l.suffix}.html</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
+    <priority>${l.suffix === "" ? "1.0" : "0.8"}</priority>
+  </url>`
+  ).join("\n");
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlEntries}
 </urlset>
 `;
   await writeFile(SITEMAP_DEST, sitemap, "utf8");
-  await writeFile(OUT_HTML, html, "utf8");
-  await writeFile(OUT_TXT, toPlainText(data), "utf8");
 
-  console.log(`Wrote ${OUT_HTML}`);
-  console.log(`Wrote ${OUT_TXT}`);
-
-  await buildPdf(OUT_HTML, OUT_PDF);
-  console.log(`Wrote ${OUT_PDF}`);
   console.log("Build complete.");
 }
 

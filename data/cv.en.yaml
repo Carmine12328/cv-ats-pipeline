@@ -1,0 +1,97 @@
+# =============================================================================
+# CV data — English translation
+# Profile: https://www.linkedin.com/in/carmine-annunziata-758a931aa/
+# =============================================================================
+
+lang: en
+
+basics:
+  name: "Carmine Annunziata"
+  title: "Full Stack Software Engineer"
+  location: "Pistoia, Tuscany, Italy"
+  email: "carmine12328@gmail.com"
+  phone: "+39 351 016 5813"
+  linkedin: "https://www.linkedin.com/in/carmine-annunziata-758a931aa"
+  github: ""
+  website: ""
+
+summary: >
+  Full Stack Software Engineer with 4+ years of experience developing enterprise
+  applications for the healthcare and public administration sectors. Specialized
+  in designing and maintaining complex architectures, including a national legal
+  medicine platform used by numerous local health authorities (ASL/ASST) and a
+  unified system for the Labour Inspectorate capable of handling over 5,000
+  monthly notifications. Strong expertise in Front End development (Angular,
+  TypeScript) and Back End development (Java, Hibernate), with a solid focus on
+  DevOps practices (Docker, Kubernetes, GitLab CI/CD) for release automation
+  and high reliability.
+
+skills:
+  - category: "Frontend"
+    items: ["Angular", "JavaScript", "RxJS", "HTML5", "CSS3"]
+  - category: "Backend"
+    items: ["Java", "Hibernate", "REST API", "Maven", "JasperReports"]
+  - category: "Database"
+    items: ["SQL", "MySQL", "Oracle SQL", "Data modelling & normalisation"]
+  - category: "DevOps / Methodologies"
+    items: ["Git", "Docker", "Kubernetes", "GitLab CI/CD", "Issue Tracking", "Agile"]
+  - category: "Other Languages"
+    items: ["Python", "PHP"]
+
+experience:
+  - company: "GPI Group"
+    role: "Full Stack Developer"
+    location: "Florence, Tuscany, Italy"
+    start: "06/2022"
+    end: "Present"
+    highlights:
+      - "Developed and optimised Medleg 4.0, an enterprise application (Angular/Java) for legal medicine adopted nationwide by local health authorities (ASL/ASST), managing the entire software lifecycle for data extraction, commissions, and citizen portals."
+      - "Led the adoption of DevOps practices by introducing Docker and Kubernetes for deployments in the Tuscany region. Designed CI/CD pipelines with GitLab, automating build processes for a team of 5 developers and drastically reducing release times."
+      - "Coordinated task management and release planning for the entire team through internal issue-tracking platforms (Jira-like), following Agile workflows to ensure continuous delivery."
+      - "Built the Construction Site Notifications Portal (PNC) using Angular 14, Java, and Hibernate, ensuring reliable handling of over 5,000 monthly notifications to the Labour Inspectorate and other public bodies."
+      - "Implemented complex system integrations via Mirth Connect for asynchronous, high-frequency synchronisation of personal data registries and medical catalogues (e.g., RFC249 data flows)."
+
+  - company: "Develer"
+    role: "Software Developer Intern"
+    location: "Florence, Tuscany, Italy"
+    start: "05/2019"
+    end: "08/2019"
+    highlights:
+      - "Designed and implemented Python and Lua scripts for test automation and technical board configuration in an embedded systems environment."
+
+projects: []
+
+education:
+  - institution: "Associazione Forma.Temp"
+    degree: "Specialisation Course: Full Stack Java Developer"
+    location: ""
+    start: "2022"
+    end: "2022"
+    details: ""
+
+  - institution: "I.T.T.S. Fedi Fermi"
+    degree: "Diploma in Computer Science (Information Science & Technology)"
+    location: "Pistoia, Tuscany, Italy"
+    start: "2015"
+    end: "2020"
+    details: ""
+
+certifications:
+  - name: "Cambridge English First (FCE)"
+    issuer: "Cambridge Assessment English"
+    year: "2019"
+
+languages:
+  - name: "Italian"
+    level: "Native"
+  - name: "English"
+    level: "Professional working (B2 — Cambridge English First)"
+
+labels:
+  summary: "Professional Summary"
+  skills: "Skills"
+  experience: "Experience"
+  projects: "Projects"
+  education: "Education"
+  certifications: "Certifications"
+  languages: "Languages"
