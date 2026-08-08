@@ -1,6 +1,7 @@
 # CV ATS Pipeline
 
 [![Build CV](https://github.com/Carmine12328/cv-ats-pipeline/actions/workflows/build.yml/badge.svg)](https://github.com/Carmine12328/cv-ats-pipeline/actions/workflows/build.yml)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-View_CV-blue?style=flat-square)](https://Carmine12328.github.io/cv-ats-pipeline/)
 
 Data-driven curriculum vitae: **YAML → HTML → PDF** (+ plain `.txt` for ATS paste forms). Built for real Full Stack Developer applications — single column, selectable text, standard section titles.
 
