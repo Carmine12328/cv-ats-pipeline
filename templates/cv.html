@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{basics.name}} — {{basics.title}}</title>
+  <link rel="stylesheet" href="../styles/cv.css" />
+</head>
+<body>
+  <main class="cv">
+    <header class="cv-header">
+      <h1 class="name">{{basics.name}}</h1>
+      <p class="title">{{basics.title}}</p>
+      <p class="contact">
+        {{#basics.location}}<span>{{basics.location}}</span>{{/basics.location}}
+        {{#basics.email}}<span><a href="mailto:{{basics.email}}">{{basics.email}}</a></span>{{/basics.email}}
+        {{#basics.phone}}<span>{{basics.phone}}</span>{{/basics.phone}}
+        {{#basics.linkedin}}<span><a href="{{basics.linkedin}}">{{basics.linkedin}}</a></span>{{/basics.linkedin}}
+        {{#basics.github}}<span><a href="{{basics.github}}">{{basics.github}}</a></span>{{/basics.github}}
+        {{#basics.website}}<span><a href="{{basics.website}}">{{basics.website}}</a></span>{{/basics.website}}
+      </p>
+    </header>
+
+    {{#summary}}
+    <section class="section" aria-labelledby="summary-heading">
+      <h2 id="summary-heading">{{labels.summary}}</h2>
+      <p class="summary">{{summary}}</p>
+    </section>
+    {{/summary}}
+
+    {{#skills.length}}
+    <section class="section" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">{{labels.skills}}</h2>
+      <ul class="skills-list">
+        {{#skills}}
+        <li>
+          <span class="skill-category">{{category}}:</span>
+          <span class="skill-items">{{items_joined}}</span>
+        </li>
+        {{/skills}}
+      </ul>
+    </section>
+    {{/skills.length}}
+
+    {{#experience.length}}
+    <section class="section" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">{{labels.experience}}</h2>
+      {{#experience}}
+      <article class="entry">
+        <div class="entry-header">
+          <h3 class="entry-title">{{role}} — {{company}}</h3>
+          <p class="entry-meta">
+            <span class="dates">{{start}} – {{end}}</span>
+            {{#location}}<span class="location">{{location}}</span>{{/location}}
+          </p>
+        </div>
+        {{#highlights.length}}
+        <ul class="bullets">
+          {{#highlights}}
+          <li>{{.}}</li>
+          {{/highlights}}
+        </ul>
+        {{/highlights.length}}
+      </article>
+      {{/experience}}
+    </section>
+    {{/experience.length}}
+
+    {{#projects.length}}
+    <section class="section" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">{{labels.projects}}</h2>
+      {{#projects}}
+      <article class="entry">
+        <div class="entry-header">
+          <h3 class="entry-title">
+            {{#url}}<a href="{{url}}">{{name}}</a>{{/url}}
+            {{^url}}{{name}}{{/url}}
+          </h3>
+          {{#stack_joined}}
+          <p class="entry-meta"><span class="stack">{{stack_joined}}</span></p>
+          {{/stack_joined}}
+        </div>
+        {{#description}}<p class="entry-desc">{{description}}</p>{{/description}}
+        {{#highlights.length}}
+        <ul class="bullets">
+          {{#highlights}}
+          <li>{{.}}</li>
+          {{/highlights}}
+        </ul>
+        {{/highlights.length}}
+      </article>
+      {{/projects}}
+    </section>
+    {{/projects.length}}
+
+    {{#education.length}}
+    <section class="section" aria-labelledby="education-heading">
+      <h2 id="education-heading">{{labels.education}}</h2>
+      {{#education}}
+      <article class="entry">
+        <div class="entry-header">
+          <h3 class="entry-title">{{degree}} — {{institution}}</h3>
+          <p class="entry-meta">
+            <span class="dates">{{start}} – {{end}}</span>
+            {{#location}}<span class="location">{{location}}</span>{{/location}}
+          </p>
+        </div>
+        {{#details}}<p class="entry-desc">{{details}}</p>{{/details}}
+      </article>
+      {{/education}}
+    </section>
+    {{/education.length}}
+
+    {{#languages.length}}
+    <section class="section" aria-labelledby="languages-heading">
+      <h2 id="languages-heading">{{labels.languagesCertifications}}</h2>
+      <ul class="skills-list">
+        {{#languages}}
+        <li>
+          <span class="skill-category">{{name}}:</span>
+          <span class="skill-items">{{level}}</span>
+        </li>
+        {{/languages}}
+      </ul>
+      {{#certifications.length}}
+      <ul class="certs-list compact-certs">
+        {{#certifications}}
+        <li>
+          <span class="cert-name">{{name}}</span>
+          {{#issuer}} — {{issuer}}{{/issuer}}
+          {{#year}} ({{year}}){{/year}}
+        </li>
+        {{/certifications}}
+      </ul>
+      {{/certifications.length}}
+    </section>
+    {{/languages.length}}
+  </main>
+</body>
+</html>

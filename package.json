@@ -1,0 +1,19 @@
+{
+  "name": "cv-ats-pipeline",
+  "version": "1.0.0",
+  "description": "YAML → HTML → PDF CV generator optimized for ATS and Full Stack Developer applications",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:pdf": "node scripts/build.mjs --pdf-only"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "mustache": "^4.2.0",
+    "playwright": "^1.49.0"
+  },
+  "private": true
+}

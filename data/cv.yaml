@@ -1,0 +1,95 @@
+# =============================================================================
+# CV data — sourced from LinkedIn export (Profile.pdf)
+# Profile: https://www.linkedin.com/in/carmine-annunziata-758a931aa/
+# =============================================================================
+
+basics:
+  name: "Carmine Annunziata"
+  title: "Full Stack Software Engineer"
+  location: "Pistoia, Toscana, Italia"
+  email: "carmine12328@gmail.com"
+  phone: "+39 351 016 5813"
+  linkedin: "https://www.linkedin.com/in/carmine-annunziata-758a931aa"
+  github: "" # non presente nell'export LinkedIn — aggiungi se disponibile
+  website: ""
+
+summary: >
+  Full Stack Software Engineer con 4+ anni di esperienza nello sviluppo di applicazioni
+  enterprise per il settore sanitario e della Pubblica Amministrazione. Specializzato
+  nella progettazione e manutenzione di architetture complesse, tra cui una piattaforma
+  nazionale di medicina legale in uso presso numerose ASL/ASST e un sistema unificato per
+  l'Ispettorato del Lavoro capace di gestire oltre 5.000 notifiche mensili. Competenze
+  consolidate nello sviluppo Front End (Angular, TypeScript) e Back End (Java, Hibernate),
+  con forte orientamento alle pratiche DevOps (Docker, Kubernetes, GitLab CI/CD) per
+  l'automazione dei rilasci e la garanzia di alta affidabilità.
+
+skills:
+  - category: "Frontend"
+    items: ["Angular", "JavaScript", "RxJS", "HTML5", "CSS3"]
+  - category: "Backend"
+    items: ["Java", "Hibernate", "REST API", "Maven", "JasperReports"]
+  - category: "Database"
+    items: ["SQL", "MySQL", "Oracle SQL", "Modellazione e normalizzazione"]
+  - category: "DevOps / Metodologie"
+    items: ["Git", "Docker", "Kubernetes", "GitLab CI/CD", "Issue Tracking", "Agile"]
+  - category: "Altri linguaggi"
+    items: ["Python", "PHP"]
+
+experience:
+  - company: "GPI Group"
+    role: "Full Stack Developer"
+    location: "Firenze, Toscana, Italia"
+    start: "06/2022"
+    end: "Presente"
+    highlights:
+      - "Sviluppato e ottimizzato Medleg 4.0, applicazione enterprise (Angular/Java) per la medicina legale adottata su scala nazionale da ASL/ASST, gestendo l'intero ciclo di vita del software per l'estrazione dati, commissioni e portali cittadino."
+      - "Guidato l'adozione di pratiche DevOps introducendo Docker e Kubernetes per i deploy in regione Toscana. Progettato pipeline CI/CD con GitLab, automatizzando i processi di build per un team di 5 sviluppatori e riducendo drasticamente i tempi di rilascio."
+      - "Coordinato la gestione dei task e dei rilasci dell'intero team attraverso piattaforme di Issue Tracking interne (simil-Jira), seguendo flussi di lavoro Agile per garantire una delivery continua."
+      - "Realizzato il Portale Notifiche Cantieri (PNC) utilizzando Angular 14, Java e Hibernate, garantendo la gestione affidabile di oltre 5.000 notifiche mensili verso l'Ispettorato del Lavoro e altri enti pubblici."
+      - "Implementato integrazioni di sistema complesse tramite Mirth Connect per la sincronizzazione asincrona e ad alta frequenza di dati anagrafici e cataloghi medici (es. flussi RFC249)."
+
+  - company: "Develer"
+    role: "Software Developer Intern"
+    location: "Firenze, Toscana, Italia"
+    start: "05/2019"
+    end: "08/2019"
+    highlights:
+      - "Progettato e implementato script in Python e Lua per l'automazione dei test e la configurazione di schede tecniche in ambito sistemi embedded."
+
+# Nessun progetto elencato nell'export LinkedIn — aggiungi qui se rilevanti
+projects: []
+
+education:
+  - institution: "Associazione Forma.Temp"
+    degree: "Corso di Specializzazione: Full Stack Java Developer"
+    location: ""
+    start: "2022"
+    end: "2022"
+    details: ""
+
+  - institution: "I.T.T.S. Fedi Fermi"
+    degree: "Diploma di Perito Informatico (Scienze e Tecnologie Informatiche)"
+    location: "Pistoia, Toscana, Italia"
+    start: "2015"
+    end: "2020"
+    details: ""
+
+certifications:
+  - name: "Cambridge English First (FCE)"
+    issuer: "Cambridge Assessment English"
+    year: "2019" # Issued Mar 2019 (profilo LinkedIn pubblico)
+
+languages:
+  - name: "Italiano"
+    level: "Madrelingua"
+  - name: "Inglese"
+    level: "Professional working (B2 — Cambridge English First)"
+
+labels:
+  summary: "Profilo professionale"
+  skills: "Competenze"
+  experience: "Esperienza"
+  projects: "Progetti"
+  education: "Formazione"
+  certifications: "Certificazioni"
+  languages: "Lingue"

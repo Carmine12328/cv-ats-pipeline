@@ -1,0 +1,240 @@
+/* CV — A4 single-column, ATS-safe */
+
+:root {
+  --ink: #1a1a1a;
+  --muted: #444;
+  --rule: #c8c8c8;
+  --accent: #1e3a5f;
+  --page-pad: 14mm;
+  --font: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10.5pt;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--ink);
+  background: #e8e8e8;
+  font-family: var(--font);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.cv {
+  max-width: 210mm;
+  min-height: 297mm;
+  margin: 1.5rem auto;
+  padding: var(--page-pad);
+  background: #fff;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Header — all critical info in body flow (not page header/footer) */
+.cv-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1.5px solid var(--accent);
+}
+
+.name {
+  margin: 0 0 0.15rem;
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  line-height: 1.15;
+}
+
+.title {
+  margin: 0 0 0.45rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.contact {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.65rem;
+}
+
+.contact span + span::before {
+  content: "·";
+  margin-right: 0.5rem;
+  color: #999;
+}
+
+.contact a {
+  word-break: break-all;
+}
+
+/* Sections */
+.section {
+  margin-top: 1rem;
+}
+
+.section h2 {
+  margin: 0 0 0.45rem;
+  padding-top: 0.05rem;
+  padding-bottom: 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  border-bottom: 1px solid var(--rule);
+}
+
+.summary {
+  margin: 0;
+  text-align: left;
+}
+
+/* Skills as plain text lists — no bars */
+.skills-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skills-list li {
+  margin-bottom: 0.2rem;
+}
+
+.skill-category {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.skill-items {
+  color: var(--muted);
+}
+
+/* Experience / projects / education entries */
+.entry {
+  margin-bottom: 0.65rem;
+}
+
+.entry:last-child {
+  margin-bottom: 0;
+}
+
+.entry-header {
+  margin-bottom: 0.15rem;
+}
+
+.entry-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.entry-meta {
+  margin: 0.1rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.75rem;
+}
+
+.entry-desc {
+  margin: 0.2rem 0 0;
+  color: var(--ink);
+}
+
+.bullets {
+  margin: 0.25rem 0 0;
+  padding-left: 1.15rem;
+}
+
+.bullets li {
+  margin-bottom: 0.18rem;
+}
+
+.bullets li::marker {
+  color: var(--accent);
+}
+
+.certs-list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.certs-list.compact-certs {
+  margin-top: 0.35rem;
+}
+
+.certs-list li {
+  margin-bottom: 0.15rem;
+}
+
+.cert-name {
+  font-weight: 600;
+}
+
+/* Screen preview */
+@media screen {
+  body {
+    padding: 0 0.5rem 2rem;
+  }
+}
+
+/* Print / PDF (Playwright) */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html {
+    font-size: 10pt;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .cv {
+    margin: 0;
+    max-width: none;
+    min-height: auto;
+    box-shadow: none;
+    padding: var(--page-pad);
+  }
+
+  a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .section {
+    break-inside: avoid;
+  }
+
+  .entry {
+    break-inside: avoid;
+  }
+}

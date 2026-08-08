@@ -1,0 +1,7 @@
+node_modules/
+dist/*
+!dist/.gitkeep
+.DS_Store
+*.log
+playwright-report/
+test-results/
