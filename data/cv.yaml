@@ -45,7 +45,7 @@ experience:
     end: "Presente"
     highlights:
       - "Sviluppato e ottimizzato Medleg 4.0, applicazione enterprise (Angular/Java) per la medicina legale adottata su scala nazionale da ASL/ASST, gestendo l'intero ciclo di vita del software per l'estrazione dati, commissioni e portali cittadino."
-      - "Guidato l'adozione di pratiche DevOps introducendo Docker e Kubernetes per i deploy in regione Toscana. Progettato pipeline CI/CD con GitLab, automatizzando i processi di build per un team di 5 sviluppatori e riducendo i tempi di rilascio da ore (build manuali, dipendenti dall'ambiente e dalle competenze del singolo) a pochi minuti."
+      - "Guidato l'adozione di pratiche DevOps introducendo Docker e Kubernetes per i deploy in regione Toscana. Progettato pipeline CI/CD con GitLab, automatizzando i processi di build per un team di 5 sviluppatori e riducendo i tempi di rilascio da ore a pochi minuti."
       - "Coordinato la gestione dei task e dei rilasci dell'intero team attraverso piattaforme di Issue Tracking interne (simil-Jira), seguendo flussi di lavoro Agile per garantire una delivery continua."
       - "Realizzato il Portale Notifiche Cantieri (PNC) utilizzando Angular 14, Java e Hibernate, garantendo la gestione affidabile di oltre 5.000 notifiche mensili verso l'Ispettorato del Lavoro e altri enti pubblici."
       - "Implementato integrazioni di sistema complesse tramite Mirth Connect per la sincronizzazione asincrona e ad alta frequenza di dati anagrafici e cataloghi medici (es. flussi RFC249)."

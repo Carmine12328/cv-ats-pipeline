@@ -371,10 +371,13 @@ a:hover {
 
   html {
     font-size: 10pt;
+    overflow: hidden; /* prevent micro-overflow from creating blank page 2 */
   }
 
   body {
     background: #fff;
+    margin: 0;
+    padding: 0;
   }
 
   .cv {
