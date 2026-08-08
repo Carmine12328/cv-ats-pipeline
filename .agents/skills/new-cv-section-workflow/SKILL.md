@@ -46,4 +46,4 @@ Add the new section using standard semantic HTML and Mustache templating. Place 
 
 ### Step 4: Build and Verify
 Run `npm run build` to generate the new HTML, TXT, and PDF artifacts. 
-Ensure the build passes and the new layout still conforms to the strict one-column ATS constraints defined in `AI_AGENT_DOCS.md`.
+Ensure the build passes and the new layout still conforms to the strict one-column ATS constraints defined in `docs/ai/ai_agent_docs.md`.

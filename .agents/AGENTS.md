@@ -29,4 +29,4 @@ This is a data-driven CV generator optimized for Applicant Tracking Systems (ATS
    - If adding new sections, make sure to update the labels mapping in `build.mjs` and the corresponding Mustache block in `cv.html`, while preserving the semantic HTML layout (`<section>`, `<article>`, `<ul>`).
 
 5. **Reference Documentation:**
-   - For a deeper dive into the architecture, data schema, and pipeline flow, refer to `AI_AGENT_DOCS.md` in the project root.
+   - For a deeper dive into the architecture, data schema, and pipeline flow, refer to `docs/ai/ai_agent_docs.md`.
