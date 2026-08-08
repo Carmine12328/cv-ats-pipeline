@@ -227,9 +227,10 @@
         </article>
         {{/education}}
       </section>
-      {{/education.length}} {{#languages.length}}
+      {{/education.length}} {{#hasLanguagesOrCerts}}
       <section class="section" aria-labelledby="languages-heading">
         <h2 id="languages-heading">{{labels.languagesCertifications}}</h2>
+        {{#languages.length}}
         <ul class="skills-list">
           {{#languages}}
           <li>
@@ -238,7 +239,7 @@
           </li>
           {{/languages}}
         </ul>
-        {{#certifications.length}}
+        {{/languages.length}} {{#certifications.length}}
         <ul class="certs-list compact-certs">
           {{#certifications}}
           <li>
@@ -249,7 +250,7 @@
         </ul>
         {{/certifications.length}}
       </section>
-      {{/languages.length}}
+      {{/hasLanguagesOrCerts}}
     </main>
 
     <script>

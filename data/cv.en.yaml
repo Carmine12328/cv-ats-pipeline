@@ -28,7 +28,7 @@ summary: >
 
 skills:
   - category: "Frontend"
-    items: ["Angular", "JavaScript", "RxJS", "HTML5", "CSS3"]
+    items: ["Angular", "TypeScript", "JavaScript", "RxJS", "HTML5", "CSS3"]
   - category: "Backend"
     items: ["Java", "Hibernate", "REST API", "Maven", "JasperReports"]
   - category: "Database"
@@ -42,7 +42,7 @@ experience:
   - company: "GPI Group"
     role: "Full Stack Developer"
     location: "Florence, Tuscany, Italy"
-    start: "06/2022"
+    start: "Jun 2022"
     end: "Present"
     highlights:
       - "Developed and optimised Medleg 4.0, an enterprise application (Angular/Java) for legal medicine adopted nationwide by local health authorities (ASL/ASST), managing the entire software lifecycle for data extraction, commissions, and citizen portals."
@@ -54,14 +54,21 @@ experience:
   - company: "Develer"
     role: "Software Developer Intern"
     location: "Florence, Tuscany, Italy"
-    start: "05/2019"
-    end: "08/2019"
+    start: "May 2019"
+    end: "Aug 2019"
     highlights:
       - "Designed and implemented Python and Lua scripts for test automation and technical board configuration in an embedded systems environment."
 
 projects: []
 
 education:
+  - institution: "University of Pisa"
+    degree: "Bachelor's Degree in Computer Science (not completed)"
+    location: "Pisa, Tuscany, Italy"
+    start: "Sep 2020"
+    end: "2022"
+    details: "Left university to accept a professional opportunity as a Full Stack Developer."
+
   - institution: "Associazione Forma.Temp"
     degree: "Specialisation Course: Full Stack Java Developer"
     location: ""

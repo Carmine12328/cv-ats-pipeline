@@ -124,6 +124,8 @@ function prepareView(data, currentSuffix) {
     education: data.education || [],
     certifications: data.certifications || [],
     languages: data.languages || [],
+    hasLanguagesOrCerts:
+      (data.languages || []).length > 0 || (data.certifications || []).length > 0,
     languages_nav,
     hreflang_links,
     langSuffix: currentSuffix,
