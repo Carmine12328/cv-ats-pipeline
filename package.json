@@ -7,7 +7,7 @@
     "build": "node scripts/build.mjs",
     "build:pdf": "node scripts/build.mjs --pdf-only",
     "test": "node scripts/validate.mjs",
-    "lint": "eslint scripts/",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "validate": "npm run build && npm run test",
